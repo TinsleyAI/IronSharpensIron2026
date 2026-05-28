@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOC Men's Summit Planning Portal</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Poppins (Headings), Inter (Body), Lora (Quotes/Styles) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&family=Lora:ital,wght@1,400;1,500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mocAzure: '#1e4d8f',
+            mocYellow: '#ffc71f',
+            mocIndigo: '#4F1271',
+            mocBlack: '#1c1c1c',
+            mocSilver: '#bcbcbc',
+            mocRed: '#9b1c1c',
+            mocGreen: '#0b3d2e',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Poppins', 'sans-serif'],
+            serif: ['Lora', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Global accessibility & typesetting from guidelines */
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300; /* Inter Light standard for body */
+      color: #1c1c1c;
+      background-color: #f7fafc;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600; /* Poppins Semi-Bold */
+    }
+    .slogan-font {
+      font-family: 'Lora', serif;
+      font-style: italic;
+    }
+    
+    /* Active tab style custom highlight */
+    .tab-active {
+      border-bottom-color: #ffc71f;
+      color: #ffc71f;
+      background-color: rgba(255, 199, 31, 0.05);
+    }
+
+    /* Print styling optimizations */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background-color: white;
+        color: black;
+      }
+      .print-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .proposal-print-area {
+        display: block !important;
+        width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col animate-fadeIn">
+
+  <!-- Header Section with MoC Branding -->
+  <header class="bg-mocAzure text-white shadow-md no-print">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <!-- Official Custom MoC Logo Web Asset -->
+        <img src="https://mocfamily.com/wp-content/uploads/2025/11/moc-logo-512x512-1-150x150.webp" 
+             alt="MOC Logo" 
+             class="w-16 h-16 object-contain rounded-full border-2 border-white bg-white"
+             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%231e4d8f\'><circle cx=\'50\' cy=\'50\' r=\'45\' stroke=\'white\' stroke-width=\'3\'/><text x=\'50\' y=\'58\' font-family=\'Lora\' font-style=\'italic\' font-size=\'26\' fill=\'white\' text-anchor=\'middle\' font-weight=\'bold\'>moc</text></svg>';">
+        <div>
+          <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white font-heading">MINISTRIES OF CHRIST</h1>
+          <p class="text-xs md:text-sm text-mocYellow slogan-font">"Where the love of God pierces the heart."</p>
+        </div>
+      </div>
+      <div class="text-center md:text-right bg-mocIndigo/30 px-4 py-2 rounded-lg border border-white/10">
+        <span class="text-mocYellow text-xs font-bold block tracking-wider uppercase">Planning & Presentation Portal</span>
+        <span class="text-sm font-semibold block">Men's Summit 2026</span>
+        <span class="text-xs text-mocSilver block">June 20, 2026 • 1:00 PM - 4:00 PM</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-mocBlack text-white sticky top-0 z-30 shadow no-print">
+    <div class="max-w-7xl mx-auto px-2 flex justify-between overflow-x-auto whitespace-nowrap">
+      <div class="flex">
+        <button onclick="switchTab('overview')" id="tab-overview" class="px-4 py-4 text-xs md:text-sm font-semibold tracking-wide border-b-4 border-transparent hover:text-mocYellow transition duration-150 ease-in-out tab-active flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          Overview & Theme
+        </button>
+        <button onclick="switchTab('agenda')" id="tab-agenda" class="px-4 py-4 text-xs md:text-sm font-semibold tracking-wide border-b-4 border-transparent hover:text-mocYellow transition duration-150 ease-in-out flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Proposed Agenda
+        </button>
+        <button onclick="switchTab('hosts')" id="tab-hosts" class="px-4 py-4 text-xs md:text-sm font-semibold tracking-wide border-b-4 border-transparent hover:text-mocYellow transition duration-150 ease-in-out flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          Table Hosts Hub
+        </button>
+        <button onclick="switchTab('dismas')" id="tab-dismas" class="px-4 py-4 text-xs md:text-sm font-semibold tracking-wide border-b-4 border-transparent hover:text-mocYellow transition duration-150 ease-in-out flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+          Dismas Proposal
+        </button>
+        <button onclick="switchTab('logistics')" id="tab-logistics" class="px-4 py-4 text-xs md:text-sm font-semibold tracking-wide border-b-4 border-transparent hover:text-mocYellow transition duration-150 ease-in-out flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+          Operations & Checklists
+        </button>
+      </div>
+      <button onclick="window.print()" class="m-2 bg-mocAzure hover:bg-mocAzure/80 text-white text-xs font-semibold px-4 py-2 rounded-md border border-mocYellow/40 flex items-center gap-2 self-center transition duration-150">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+        Print Documents
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Body -->
+  <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:py-8 animate-fadeIn">
+
+    <!-- Active Tab Panel 1: OVERVIEW -->
+    <div id="panel-overview" class="tab-panel space-y-6">
+      
+      <!-- Vision Hero Box -->
+      <div class="bg-gradient-to-br from-mocAzure to-mocIndigo text-white p-6 md:p-8 rounded-2xl shadow-xl relative overflow-hidden print-card">
+        <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none transform translate-x-12 translate-y-12">
+          <svg class="w-96 h-96" viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="50" r="45" />
+          </svg>
+        </div>
+        <div class="relative z-10 max-w-3xl">
+          <span class="bg-mocYellow text-mocBlack font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">Church Leadership Proposal</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-4 mb-2 font-heading tracking-tight leading-tight">Iron Sharpens Iron: Men's Summit 2026</h2>
+          <p class="text-mocYellow text-lg font-serif italic mb-6">Theme: "Stronger Fathers, Stronger Families"</p>
+          <p class="text-sm md:text-base text-white/90 leading-relaxed font-sans mb-6">
+            The mission of this summit is to cultivate an intentional environment that invites absolute psychological safety, deep introspection, and genuine vulnerability. By doing so, we will provide critical encouragement and a scripturally sound perspective on the dual roles of fathers in their households and the wider community.
+          </p>
+          <div class="flex flex-wrap gap-4 text-sm font-semibold">
+            <span class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg border border-white/10">
+              <span class="w-2.5 h-2.5 rounded-full bg-mocYellow"></span>
+              June 20, 2026 (Saturday)
+            </span>
+            <span class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg border border-white/10">
+              <span class="w-2.5 h-2.5 rounded-full bg-mocYellow"></span>
+              1:00 PM - 4:00 PM (3 Hours)
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conceptual Disclaimer Note (Constraint Highlight) -->
+      <div class="bg-mocYellow/10 border-l-4 border-mocYellow p-4 rounded-r-lg print-card">
+        <div class="flex gap-3">
+          <div class="text-mocYellow flex-shrink-0">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+          </div>
+          <div class="text-xs text-mocBlack/90">
+            <span class="font-bold block text-mocAzure uppercase tracking-wide mb-0.5">Planning & Structural Grounding Note</span>
+            Please note that the specific <strong>Scriptural Key (Job 1:5)</strong> and <strong>"Iron Coin" takeaway activities</strong> outlined in this proposal represent creative conceptual ideas. They are intentionally designed to ground, clarify, and anchor the strategic thematic framework, and remain open to adaptation by the leadership team.
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Pillars Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Pillar 1: The Qualifications Discussion -->
+        <div class="bg-white border-l-4 border-mocYellow p-6 rounded-r-xl shadow-sm hover:shadow transition print-card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-3 bg-mocYellow/10 rounded-lg text-mocAzure">
+              <!-- Shield SVG -->
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 00-.707.293L3.586 8.586A1 1 0 003 9.293V14a2 2 0 002 2h10a2 2 0 002-2V9.293a1 1 0 00-.293-.707l-5.707-5.707A1 1 0 0010 2zM5 14v-4h10v4H5z" clip-rule="evenodd"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold tracking-tight text-mocAzure">Deconstructing the "World's Resume"</h3>
+          </div>
+          <p class="text-sm text-mocBlack/80 leading-relaxed mb-4">
+            Most men live under the crushing weight of having to perform according to a societal "Spec Sheet" — status, economic output, or sheer luck. 
+          </p>
+          <div class="bg-mocAzure/5 p-4 rounded-lg border border-mocAzure/10">
+            <span class="text-xs font-bold text-mocAzure block uppercase tracking-wider mb-1">Interactive Workshop Focus</span>
+            <p class="text-sm text-mocBlack/90">
+              We guide the room through an anonymous card exercise to demonstrate that the true requirements of fatherhood are not defined by pedigree or bank accounts. They are <strong>matters of character and heart</strong>, fully attainable by any man who surrenders to the Holy Spirit.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 2: The Shield and the Shepherd -->
+        <div class="bg-white border-l-4 border-mocIndigo p-6 rounded-r-xl shadow-sm hover:shadow transition print-card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-3 bg-mocIndigo/10 rounded-lg text-mocIndigo">
+              <!-- Shepherd Crook SVG -->
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold tracking-tight text-mocIndigo">The Shield & The Shepherd</h3>
+          </div>
+          <p class="text-sm text-mocBlack/80 leading-relaxed mb-4">
+            To reach unchurched men without immediate "churchy" friction, we translate the high-level biblical offices of <strong>King and Priest</strong> into practical, daily roles:
+          </p>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-mocAzure/5 rounded border border-mocAzure/10">
+              <strong class="text-mocAzure block mb-1">The Shield (King)</strong>
+              Provision, rules, boundaries, and outer protection.
+            </div>
+            <div class="p-3 bg-mocIndigo/5 rounded border border-mocIndigo/10">
+              <strong class="text-mocIndigo block mb-1">The Shepherd (Priest)</strong>
+              Intimacy, emotional safety, mercy, and internal healing.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Slogan callout block -->
+      <div class="bg-mocBlack text-white p-6 rounded-xl text-center shadow-inner relative overflow-hidden print-card">
+        <p class="text-xl italic font-serif text-mocYellow mb-1">"Where the love of God pierces the heart."</p>
+      </div>
+
+    </div>
+
+    <!-- Active Tab Panel 2: PROPOSED AGENDA -->
+    <div id="panel-agenda" class="tab-panel hidden space-y-6">
+      
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-100">
+          <div>
+            <h2 class="text-2xl font-bold text-mocAzure tracking-tight">The 3-Hour Chronological Flow</h2>
+            <p class="text-sm text-gray-500">Every minute planned to maximize connection, engagement, and spiritual rest.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-gray-400 font-semibold">Proposed MC:</span>
+            <span class="bg-mocAzure text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-mocYellow/30">Marquis Johnson</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Timeline Alert Note -->
+        <div class="mt-4 text-xs text-gray-500 bg-gray-50 p-3 rounded border border-gray-200 flex items-center gap-2">
+          <svg class="w-4 h-4 text-mocAzure flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Note: Time-sensitive events (including the Dismas pickup at 12:30 PM and Saturday briefings at 12:15 PM) precede the official 1:00 PM program start.</span>
+        </div>
+
+        <!-- Agenda Timeline Layout -->
+        <div class="mt-8 space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-gray-100">
+          
+          <!-- Segment 1: Welcome & Icebreaker -->
+          <div class="relative flex flex-col md:flex-row md:justify-between items-start gap-4">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1.5 w-3.5 h-3.5 rounded-full bg-mocYellow border-2 border-white z-10 shadow"></div>
+            <div class="pl-8 md:pl-0 md:w-[45%] text-left md:text-right">
+              <span class="text-xs font-bold text-mocYellow uppercase tracking-widest bg-mocBlack px-2.5 py-1 rounded">1:00 PM - 1:15 PM</span>
+              <h3 class="text-lg font-bold text-mocBlack mt-2">Welcome & "The Spec Sheet" Icebreaker</h3>
+              <p class="text-sm text-gray-500 mt-1">MC Marquis Johnson welcomes the room, details logistics, and introduces the table icebreaker.</p>
+            </div>
+            <div class="pl-8 md:pl-0 md:w-[45%] bg-gray-50 p-4 rounded-lg border border-gray-100 w-full text-xs space-y-2">
+              <span class="font-bold text-mocAzure block uppercase tracking-wider">Activity: "First Car" Draft</span>
+              <p class="text-gray-600">Each man has 60 seconds to share his first car, cost, and worst defect. This instantly equalizes status and sparks laughter.</p>
+            </div>
+          </div>
+
+          <!-- Segment 2: Session 1 -->
+          <div class="relative flex flex-col md:flex-row-reverse md:justify-between items-start gap-4">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1.5 w-3.5 h-3.5 rounded-full bg-mocAzure border-2 border-white z-10 shadow"></div>
+            <div class="pl-8 md:pl-0 md:w-[45%]">
+              <span class="text-xs font-bold text-mocAzure uppercase tracking-widest bg-mocAzure/10 px-2.5 py-1 rounded">1:15 PM - 1:55 PM</span>
+              <h3 class="text-lg font-bold text-mocBlack mt-2">Session 1: The Resume of a Father</h3>
+              <p class="text-sm text-gray-500 mt-1">Interactive workshop evaluating the dynamic between "The World's Resume" and what a child actually needs.</p>
+            </div>
+            <div class="pl-8 md:pl-0 md:w-[45%] bg-gray-50 p-4 rounded-lg border border-gray-100 w-full text-xs space-y-2">
+              <span class="font-bold text-mocIndigo block uppercase tracking-wider">Key Takeaway</span>
+              <p class="text-gray-600">The core qualifications of fatherhood are not hereditary or financial. They are spiritual matters of character met through the power of the Holy Spirit.</p>
+            </div>
+          </div>
+
+          <!-- Segment 3: Session 2 -->
+          <div class="relative flex flex-col md:flex-row md:justify-between items-start gap-4">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1.5 w-3.5 h-3.5 rounded-full bg-mocIndigo border-2 border-white z-10 shadow"></div>
+            <div class="pl-8 md:pl-0 md:w-[45%] text-left md:text-right">
+              <span class="text-xs font-bold text-mocIndigo uppercase tracking-widest bg-mocIndigo/10 px-2.5 py-1 rounded">1:55 PM - 2:45 PM</span>
+              <h3 class="text-lg font-bold text-mocBlack mt-2">Session 2: The Shield & The Shepherd</h3>
+              <p class="text-sm text-gray-500 mt-1">Introduction of the accessible King & Priest metaphors. Designed specifically to make unchurched guests feel comfortable.</p>
+            </div>
+            <div class="pl-8 md:pl-0 md:w-[45%] bg-gray-50 p-4 rounded-lg border border-gray-100 w-full text-xs space-y-2">
+              <span class="font-bold text-mocYellow block uppercase tracking-wider text-black bg-mocYellow/20 px-2 rounded inline-block">Table Assessment</span>
+              <p class="text-gray-600">Men fill out a self-assessment worksheet rating their personal balance between boundary-setting (Shield) and heart-care (Shepherd).</p>
+            </div>
+          </div>
+
+          <!-- Segment 4: Lunch -->
+          <div class="relative flex flex-col md:flex-row-reverse md:justify-between items-start gap-4">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1.5 w-3.5 h-3.5 rounded-full bg-mocGreen border-2 border-white z-10 shadow"></div>
+            <div class="pl-8 md:pl-0 md:w-[45%]">
+              <span class="text-xs font-bold text-white uppercase tracking-widest bg-mocGreen px-2.5 py-1 rounded">2:45 PM - 3:25 PM</span>
+              <h3 class="text-lg font-bold text-mocBlack mt-2">Catered Lunch & Table Talk</h3>
+              <p class="text-sm text-gray-500 mt-1">Excellent buffet-style lunch provided by Swanie's Catering. Features focused table discussion cards.</p>
+            </div>
+            <div class="pl-8 md:pl-0 md:w-[45%] bg-gray-50 p-4 rounded-lg border border-gray-100 w-full text-xs space-y-2">
+              <span class="font-bold text-mocAzure block uppercase tracking-wider">Table Host Prompt</span>
+              <p class="text-gray-600">Discussion focuses on: "Who was the first man to show you what a true Shepherd looked like?" and "How can we actively sharpen one another starting today?"</p>
+            </div>
+          </div>
+
+          <!-- Segment 5: Deep Dive -->
+          <div class="relative flex flex-col md:flex-row md:justify-between items-start gap-4">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1.5 w-3.5 h-3.5 rounded-full bg-mocRed border-2 border-white z-10 shadow"></div>
+            <div class="pl-8 md:pl-0 md:w-[45%] text-left md:text-right">
+              <span class="text-xs font-bold text-white uppercase tracking-widest bg-mocRed px-2.5 py-1 rounded">3:25 PM - 3:50 PM</span>
+              <h3 class="text-lg font-bold text-mocBlack mt-2">Session 3: The Scriptural Deep Dive</h3>
+              <p class="text-sm text-gray-500 mt-1">Transitioning to the deep scriptural reality of being Kings & Priests in the family. <em class="text-mocYellow/80 block text-xs mt-1">(Thematic Grounding Concept: Job 1:5)</em></p>
+            </div>
+            <div class="pl-8 md:pl-0 md:w-[45%] bg-gray-50 p-4 rounded-lg border border-gray-100 w-full text-xs space-y-2">
+              <span class="font-bold text-mocIndigo block uppercase tracking-wider">Scriptural Key: Job 1:5</span>
+              <p class="text-gray-600 text-slate-500 italic">Job acted as the father-priest: rising early to make intercession and offer protective sacrifice for his children continuously.</p>
+            </div>
+          </div>
+
+          <!-- Segment 6: Closing Words -->
+          <div class="relative flex flex-col md:flex-row-reverse md:justify-between items-start gap-4">
+            <div class="absolute left-4 md:left-1/2 transform -translate-x-1.5 w-3.5 h-3.5 rounded-full bg-mocYellow border-2 border-white z-10 shadow"></div>
+            <div class="pl-8 md:pl-0 md:w-[45%]">
+              <span class="text-xs font-bold text-mocBlack uppercase tracking-widest bg-mocYellow px-2.5 py-1 rounded">3:50 PM - 4:00 PM</span>
+              <h3 class="text-lg font-bold text-mocBlack mt-2">Encouragement & Closing Prayer</h3>
+              <p class="text-xs font-bold text-mocAzure uppercase tracking-wide mt-1">Presented by Bishop Alexander</p>
+            </div>
+            <div class="pl-8 md:pl-0 md:w-[45%] bg-mocAzure/5 p-4 rounded-lg border border-mocAzure/10 w-full text-xs space-y-2">
+              <span class="font-bold text-mocAzure block uppercase tracking-wider">The "Iron Coin" & Prayer Circle</span>
+              <p class="text-gray-600 mb-2">Every man receives an iron token as a physical reminder of his call to strength and vulnerability. Bishop Alexander opens the altar, deploying the specialized prayer warrior team.</p>
+              <span class="text-[10px] text-mocIndigo/80 block font-semibold">Note: The "Iron Coin" is an initial creative concept to ground the framework.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Active Tab Panel 3: TABLE HOSTS HUB -->
+    <div id="panel-hosts" class="tab-panel hidden space-y-6">
+      
+      <!-- Rosters and Assignments -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Table Leaders Assignment Card -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 md:col-span-2 print-card">
+          <h2 class="text-xl font-heading text-mocAzure mb-4 flex items-center gap-2">
+            <span class="p-1 bg-mocAzure/10 text-mocAzure rounded">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            </span>
+            Official Host Assignments
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div class="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-gray-400 block font-bold">TABLE 1 HOST</span>
+                <span class="text-sm font-semibold text-mocBlack">Bishop Alexander</span>
+              </div>
+              <span class="text-[10px] bg-mocIndigo text-white font-bold px-2 py-0.5 rounded uppercase font-heading">Leader</span>
+            </div>
+
+            <div class="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-gray-400 block font-bold">TABLE 2 HOST</span>
+                <span class="text-sm font-semibold text-mocBlack">Pastor Vincent</span>
+              </div>
+              <span class="text-[10px] bg-mocIndigo text-white font-bold px-2 py-0.5 rounded uppercase font-heading">Leader</span>
+            </div>
+
+            <div class="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-gray-400 block font-bold">TABLE 3 HOST</span>
+                <span class="text-sm font-semibold text-mocBlack">Pastor Theo</span>
+              </div>
+              <span class="text-[10px] bg-mocIndigo text-white font-bold px-2 py-0.5 rounded uppercase font-heading">Leader</span>
+            </div>
+
+            <div class="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-gray-400 block font-bold">TABLE 4 HOST</span>
+                <span class="text-sm font-semibold text-mocBlack">Elder Rich</span>
+              </div>
+              <span class="text-[10px] bg-mocIndigo text-white font-bold px-2 py-0.5 rounded uppercase font-heading">Leader</span>
+            </div>
+
+            <div class="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-gray-400 block font-bold">TABLE 5 HOST</span>
+                <span class="text-sm font-semibold text-mocBlack">Deacon Sherman</span>
+              </div>
+              <span class="text-[10px] bg-mocIndigo text-white font-bold px-2 py-0.5 rounded uppercase font-heading">Leader</span>
+            </div>
+
+            <div class="p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-gray-400 block font-bold">TABLE 6 HOST</span>
+                <span class="text-sm font-semibold text-mocBlack">Deacon Eddie</span>
+              </div>
+              <span class="text-[10px] bg-mocIndigo text-white font-bold px-2 py-0.5 rounded uppercase font-heading">Leader</span>
+            </div>
+
+          </div>
+          
+          <div class="mt-6 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-bold text-mocBlack uppercase tracking-wide mb-3">Summit Alternates</h3>
+            <div class="grid grid-cols-2 gap-4 text-xs">
+              <div class="p-2.5 bg-mocYellow/5 border border-mocYellow/20 rounded">
+                <span class="text-mocAzure font-semibold block">Alternate 1</span>
+                Pastor Handley
+              </div>
+              <div class="p-2.5 bg-mocYellow/5 border border-mocYellow/20 rounded">
+                <span class="text-mocAzure font-semibold block">Alternate 2</span>
+                Pastor Austin
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guidebook Side-Panel Instructions -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+          <h2 class="text-xl font-heading text-mocIndigo mb-4">Table Rules</h2>
+          <ul class="space-y-4 text-xs">
+            <li class="flex gap-2">
+              <span class="font-bold text-mocYellow text-sm">1.</span>
+              <span><strong>Do Not Preach:</strong> Avoid delivering mini-sermons after every answer. Focus on drawing answers from the men around you.</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-mocYellow text-sm">2.</span>
+              <span><strong>Land the Plane:</strong> Politely intervene if one individual begins to monopolize the conversation to keep things on schedule.</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="font-bold text-mocYellow text-sm">3.</span>
+              <span><strong>Model Vulnerability:</strong> Men only go as deep as their leader. Be willing to share a genuine mistake or struggle as a dad.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Printable Table Host Card Handout -->
+      <div class="bg-mocAzure text-white p-6 rounded-xl shadow-md border-l-8 border-mocYellow print-card">
+        <div class="flex items-center justify-between border-b border-white/15 pb-4 mb-4">
+          <span class="text-xs tracking-widest font-bold uppercase text-mocYellow">Ministries of Christ • Table Host Cheat Sheet</span>
+          <span class="text-[10px] bg-white/10 px-2 py-1 rounded font-heading">Printable</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed">
+          <div>
+            <h4 class="font-bold text-sm text-mocYellow mb-2 uppercase tracking-wide">Key Prompts for Sessions 1 & 2</h4>
+            <ul class="space-y-2 list-disc pl-4 text-white/95">
+              <li>In what areas of your life do you feel the most pressure to live up to "The World's Resume" (earnings, status, physical output)?</li>
+              <li>If your children wrote your resume today, what do you think they would list as your most valuable "qualification"?</li>
+              <li>Can you think of a time when you over-indexed on being a "Shield" (demanding respect/enforcing rules) and it hurt your family's heart?</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-mocYellow mb-2 uppercase tracking-wide">Lunch & Guided Session Questions</h4>
+            <ul class="space-y-2 list-disc pl-4 text-white/95">
+              <li>Who was the first man in your life who showed you what a true "Shepherd" (heart-caretaker) looked like? What did he do?</li>
+              <li>What is one practical family habit or spiritual tradition you want to start inside your household this month to build stronger families?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Active Tab Panel 4: DISMAS CHARITIES PROPOSAL (In-depth Submission Draft) -->
+    <div id="panel-dismas" class="tab-panel hidden space-y-6">
+      
+      <!-- Top Actions Bar -->
+      <div class="flex justify-end no-print">
+        <button onclick="window.print()" class="bg-mocAzure hover:bg-mocAzure/90 text-white font-semibold text-xs px-4 py-2.5 rounded-lg border border-mocYellow/30 flex items-center gap-2 shadow transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+          Print Standalone Proposal Document
+        </button>
+      </div>
+
+      <!-- Main Formal Document Sheet -->
+      <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-200 proposal-print-area print-card">
+        
+        <!-- Header Sheet / Letterhead -->
+        <div class="border-b-2 border-mocAzure pb-6 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <img src="https://mocfamily.com/wp-content/uploads/2025/11/moc-logo-512x512-1-150x150.webp" alt="MOC Logo" class="w-14 h-14 object-contain">
+            <div>
+              <h2 class="text-xl font-bold font-heading text-mocAzure uppercase tracking-tight">Ministries of Christ, Inc.</h2>
+              <p class="text-xs text-gray-500">1701 West Jefferson Street, Louisville, KY 40203</p>
+              <p class="text-xs text-gray-500">Email: outreach@mocfamily.com | Ph: (502) 585-1701</p>
+            </div>
+          </div>
+          <div class="text-left md:text-right text-xs text-gray-500 md:self-end">
+            <p class="font-semibold text-mocBlack uppercase">ATTN: Facility Director & Leadership</p>
+            <p>Dismas Charities Diersen / Lytle Street</p>
+            <p>1501 Lytle Street, Louisville, KY 40203</p>
+            <p class="mt-1 font-bold">DATE: May 28, 2026</p>
+          </div>
+        </div>
+
+        <!-- Document Title -->
+        <div class="text-center mb-8">
+          <h1 class="text-2xl md:text-3xl font-bold font-heading text-mocBlack tracking-tight uppercase">PROGRAM PARTICIPATION PROPOSAL</h1>
+          <p class="text-sm font-semibold text-mocIndigo uppercase mt-1">Project: Men's Summit 2026 - "Stronger Fathers, Stronger Families"</p>
+          <div class="w-24 h-1 bg-mocYellow mx-auto mt-3"></div>
+        </div>
+
+        <!-- Document Sections -->
+        <div class="space-y-6 text-sm text-mocBlack/90 leading-relaxed font-sans">
+          
+          <!-- Section 1 -->
+          <div>
+            <h3 class="text-base font-bold text-mocAzure font-heading border-b border-gray-100 pb-1 uppercase tracking-wide mb-2">I. Executive Summary & Objective</h3>
+            <p>
+              Ministries of Christ, Inc. respectfully submits this program participation proposal to request off-site program clearance for resident gentlemen currently residing at the Dismas Charities Lytle Street facility. The selected candidates are regular, active participants of the established <strong>LOVE Program at Dismas Charities</strong> led by our ministry team. 
+            </p>
+            <p class="mt-2">
+              We seek authorization for these residents to attend our upcoming <strong>"Iron Sharpens Iron" Men's Summit</strong> as fully funded, hosted guests. The summit is scheduled for <strong>Saturday, June 20, 2026, from 1:00 PM to 4:00 PM</strong>, held in the sanctuary of Ministries of Christ (1701 W. Jefferson Street), located just five minutes away from the Dismas facility.
+            </p>
+          </div>
+
+          <!-- Section 2 -->
+          <div>
+            <h3 class="text-base font-bold text-mocAzure font-heading border-b border-gray-100 pb-1 uppercase tracking-wide mb-2">II. Alignment with the Dismas Mission</h3>
+            <p>
+              Our summit’s theme, <strong>"Stronger Fathers, Stronger Families,"</strong> is strategically engineered to align directly with Dismas Charities' foundational mandate: <span class="font-semibold text-mocIndigo">"Restoring Lives, Families, and Communities through successful Reentry."</span>
+            </p>
+            <p class="mt-2">
+              Empirical data suggests that sustainable, long-term community reintegration relies heavily on the healing of family fractures and the restoration of parental accountability. Many returning citizens face extreme internal barriers regarding shame, familial guilt, and a lack of constructive templates for healthy fatherhood. This summit directly confronts these barriers, equipping men with practical, character-driven frameworks to rebuild trust and assume positive protective leadership roles within their households and neighborhood networks.
+            </p>
+          </div>
+
+          <!-- Section 3 -->
+          <div>
+            <h3 class="text-base font-bold text-mocAzure font-heading border-b border-gray-100 pb-1 uppercase tracking-wide mb-2">III. Curated Group Dynamics & Psychological Safety</h3>
+            <p>
+              We understand that traditional lecture-style events can feel threatening or institutional, causing participants to withdraw. To combat this, the summit utilizes advanced small-group facilitation techniques designed to foster an environment of <strong>absolute psychological safety and equality</strong>:
+            </p>
+            <ul class="list-disc pl-5 mt-2 space-y-2">
+              <li>
+                <strong>Round-Table Seating Configuration:</strong> Rather than sitting in isolated rows facing a stage, attendees are seated at collaborative round tables of 6–7 men. Status-symbols are completely removed; each table is anchored by a mature, vetted table facilitator whose primary directive is to model transparency and guide mutual sharing.
+              </li>
+              <li>
+                <strong>The "Shoulder-to-Shoulder" Methodology:</strong> To lower defensive barriers, the first hour focuses on common, low-stakes activities (a vehicle-themed icebreaker, physical worksheets, and anonymous card submissions) allowing men to bond naturally while working collaboratively, rather than putting them on the spot immediately.
+              </li>
+              <li>
+                <strong>The "Shield and Shepherd" Paradigm:</strong> This approach translates deep leadership concepts into highly relatable terms. We explore how a father must act as <strong>The Shield</strong> (providing structure, limits, rules, and outer safety) and <strong>The Shepherd</strong> (providing presence, active listening, forgiveness, and emotional safety). We highlight how over-indexing on rules without relationship breaks family trust, providing a balanced blueprint for domestic life.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Section 4 -->
+          <div>
+            <h3 class="text-base font-bold text-mocAzure font-heading border-b border-gray-100 pb-1 uppercase tracking-wide mb-2">IV. Logistical Accountability, Security & Transport</h3>
+            <p>
+              To ensure absolute compliance, programmatic alignment, and safety, Ministries of Christ assumes full accountability for the transport and monitoring of the participants:
+            </p>
+            <ul class="list-disc pl-5 mt-2 space-y-2">
+              <li><strong>Secure Transport:</strong> Chaperoned transportation will be coordinated by Ministries of Christ, picking up the resident participants directly from Dismas Lytle Street (1501 Lytle St) at 12:35 PM on June 20th, with flexible return coordination immediately following the conclusion of the event, including any personalized ministry or prayer time.</li>
+              <li><strong>Proximity:</strong> The transit distance is approximately <strong>0.8 miles (a brief 5-minute drive)</strong>, drastically reducing transit risks.</li>
+              <li><strong>Accountability Checks:</strong> The designated drivers and table hosts will maintain roster accountability throughout the duration of the 3-hour event.</li>
+              <li><strong>Full Provision:</strong> Full buffet-style catering is provided by Swanie's Catering. The event, transportation, and dining are offered <strong>completely free of charge</strong> to Dismas Charities and its residents.</li>
+            </ul>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="pt-6 border-t border-gray-100">
+            <p class="text-xs text-gray-500 leading-normal">
+              We appreciate your partnership in the LOVE Program and hope to extend that same transformational impact to these gentlemen on June 20th. Thank you for your leadership, dedication, and consideration of this proposal.
+            </p>
+            <div class="mt-8 flex justify-between">
+              <div class="text-center w-48 border-t border-gray-400 pt-1 text-xs">
+                <p class="font-bold">Program Coordinator</p>
+                <p class="text-gray-500 text-[10px]">Ministries of Christ, Inc.</p>
+              </div>
+              <div class="text-center w-48 border-t border-gray-400 pt-1 text-xs">
+                <p class="font-bold">Senior Leadership Team</p>
+                <p class="text-gray-500 text-[10px]">Ministries of Christ, Inc.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Active Tab Panel 5: OPERATIONS & CHECKLISTS -->
+    <div id="panel-logistics" class="tab-panel hidden space-y-6">
+      
+      <!-- Live Progress Bar -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 print-card">
+        <div>
+          <span class="text-xs font-bold text-gray-400 block uppercase tracking-wider">Summit Preparation Progress</span>
+          <span class="text-sm text-gray-600">Manage, track, and personalize checklists for June 20th.</span>
+        </div>
+        <div class="w-full sm:w-1/2 flex items-center gap-3">
+          <div class="w-full bg-gray-100 h-3 rounded-full overflow-hidden">
+            <div id="progress-bar" class="bg-mocAzure h-full transition-all duration-300" style="width: 0%;"></div>
+          </div>
+          <span id="progress-percent" class="text-sm font-bold text-mocAzure whitespace-nowrap">0%</span>
+        </div>
+      </div>
+
+      <!-- Checklist Tabs Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Checklist 1: Friday Setup (June 19th) -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <h3 class="text-lg font-heading text-mocAzure flex items-center gap-2">
+              <span class="p-1 bg-mocAzure/10 text-mocAzure rounded">
+                <!-- Friday/Calendar SVG -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              </span>
+              Friday Setup Crew: June 19
+            </h3>
+            <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded uppercase font-bold">After Love Program</span>
+          </div>
+          <ul id="list-friday" class="space-y-3 text-xs">
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Clear the sanctuary main floor space immediately following the Love Program.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Position 8 round tables with 6–7 comfortable chairs each.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Set up whiteboards or designated walls at the front for "The World's Resume" card placement.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Install primary podium/MC microphone and test secondary wireless hand-held mics.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Pre-stage water/coffee station in the fellowship area.</span>
+            </li>
+          </ul>
+          <div class="mt-4 flex gap-2 no-print">
+            <input type="text" id="add-friday" placeholder="Add custom Friday task..." class="text-xs p-2 border border-gray-200 rounded-lg w-full focus:outline-none focus:border-mocAzure">
+            <button onclick="addTask('friday')" class="bg-mocAzure text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-mocAzure/90">Add</button>
+          </div>
+        </div>
+
+        <!-- Checklist 2: Saturday Morning of Event (June 20th) -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <h3 class="text-lg font-heading text-mocIndigo flex items-center gap-2">
+              <span class="p-1 bg-mocIndigo/10 text-mocIndigo rounded">
+                <!-- Clock SVG -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </span>
+              Saturday Setup Crew: June 20
+            </h3>
+            <span class="text-[10px] bg-mocIndigo/10 text-mocIndigo px-2 py-0.5 rounded uppercase font-bold">11:30 AM Arrival</span>
+          </div>
+          <ul id="list-saturday" class="space-y-3 text-xs">
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span><strong>11:30 AM:</strong> Setup Crew arrival, final checklist alignment, AV check.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span><strong>12:00 PM:</strong> Marquis Johnson (MC), Swanie's Catering, and Table Leaders arrive.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span><strong>12:15 PM:</strong> Table Leader and Alternate briefing (review Host Cheat Sheet).</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Distribute Table Materials: "Spec Sheets", index cards, pens, "Table Talk Menu" tents.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Initiate low-volume ambient instrumental worship track. Doors open at 12:45 PM.</span>
+            </li>
+          </ul>
+          <div class="mt-4 flex gap-2 no-print">
+            <input type="text" id="add-saturday" placeholder="Add custom Saturday task..." class="text-xs p-2 border border-gray-200 rounded-lg w-full focus:outline-none focus:border-mocAzure">
+            <button onclick="addTask('saturday')" class="bg-mocAzure text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-mocAzure/90">Add</button>
+          </div>
+        </div>
+
+        <!-- Checklist 3: Dismas Charities Transportation Execution -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <h3 class="text-lg font-heading text-mocIndigo flex items-center gap-2">
+              <span class="p-1 bg-mocIndigo/10 text-mocIndigo rounded">
+                <!-- Transit SVG -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+              </span>
+              Dismas Transportation (Louisville, KY)
+            </h3>
+            <span class="text-[10px] bg-mocIndigo/15 text-mocIndigo px-2 py-0.5 rounded uppercase font-bold">12:30 PM Departure</span>
+          </div>
+          <ul id="list-dismastransit" class="space-y-3 text-xs">
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Confirm transportation vehicle is fully fueled, cleaned, and staged at MOC by 12:15 PM.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span><strong>12:30 PM:</strong> Assigned MOC driver departs 1701 W. Jefferson St. for Dismas Charities.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span><strong>12:35 PM:</strong> Arrive at 1501 Lytle St., verify names, sign-out Dismas residents who are active participants in the LOVE Program.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span><strong>12:45 PM:</strong> Return transit to MOC, escort participants to designated table hosts.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span><strong>4:00 PM:</strong> Post-summit boarding (providing buffer time for individual altar prayer, ministry, and fellowshipping), with return transit back to Dismas Charities immediately after conversations wrap up (flexible window aiming to return by 4:45 PM - 5:00 PM).</span>
+            </li>
+          </ul>
+          <div class="mt-4 flex gap-2 no-print">
+            <input type="text" id="add-dismastransit" placeholder="Add transportation task..." class="text-xs p-2 border border-gray-200 rounded-lg w-full focus:outline-none focus:border-mocAzure">
+            <button onclick="addTask('dismastransit')" class="bg-mocAzure text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-mocAzure/90">Add</button>
+          </div>
+        </div>
+
+        <!-- Checklist 4: Swanie's Catering Execution -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <h3 class="text-lg font-heading text-mocGreen flex items-center gap-2">
+              <span class="p-1 bg-mocGreen/10 text-mocGreen rounded">
+                <!-- Food SVG -->
+                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM10 12a5.978 5.978 0 00-3.215-1.125 1 1 0 10-.142 1.995 3.978 3.978 0 014.714 0 1 1 0 10-.143-1.995A5.978 5.978 0 0010 12z" clip-rule="evenodd"></path></svg>
+              </span>
+              Catering Coordination: Swanie's
+            </h3>
+            <span class="text-[10px] bg-mocGreen/15 text-mocGreen px-2 py-0.5 rounded uppercase font-bold">12:00 PM Delivery</span>
+          </div>
+          <ul id="list-catering" class="space-y-3 text-xs">
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Confirm final headcount threshold of ~50–60 portions (men + service crew).</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Coordinate setup location in the fellowship hall.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Set out chafing dishes, sternos, and high-quality durable serving utensils.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Verify diverse menu options and clearly print labeled cards for potential allergens.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Deploy heavy-duty trash disposal cans near food stations.</span>
+            </li>
+          </ul>
+          <div class="mt-4 flex gap-2 no-print">
+            <input type="text" id="add-catering" placeholder="Add custom catering task..." class="text-xs p-2 border border-gray-200 rounded-lg w-full focus:outline-none focus:border-mocAzure">
+            <button onclick="addTask('catering')" class="bg-mocAzure text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-mocAzure/90">Add</button>
+          </div>
+        </div>
+
+        <!-- Checklist 5: Altar Call & Prayer Team Integration -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <h3 class="text-lg font-heading text-mocRed flex items-center gap-2">
+              <span class="p-1 bg-mocRed/10 text-mocRed rounded">
+                <!-- Hands SVG -->
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
+              </span>
+              Altar Call & Prayer Team
+            </h3>
+            <span class="text-[10px] bg-mocRed/15 text-mocRed px-2 py-0.5 rounded uppercase font-bold">3:50 PM Trigger</span>
+          </div>
+          <ul id="list-prayer" class="space-y-3 text-xs">
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Brief Prayer Team (Table Leaders, Rodrick, Angelo) on immediate response positions at 12:40 PM.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Position consecrated anointing oil at stage side-tables.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Open the doors of the church and call for the prayer warriors immediately during Bishop Alexander's final transition.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Maintain a protective, distraction-free environment for altar seekers.</span>
+            </li>
+          </ul>
+          <div class="mt-4 flex gap-2 no-print">
+            <input type="text" id="add-prayer" placeholder="Add custom prayer task..." class="text-xs p-2 border border-gray-200 rounded-lg w-full focus:outline-none focus:border-mocAzure">
+            <button onclick="addTask('prayer')" class="bg-mocAzure text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-mocAzure/90">Add</button>
+          </div>
+        </div>
+
+        <!-- Checklist 6: Post-Event Clean Up & Sanctuary Reset -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 print-card">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+            <h3 class="text-lg font-heading text-mocBlack flex items-center gap-2">
+              <span class="p-1 bg-mocBlack/10 text-mocBlack rounded">
+                <!-- Reset SVG -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18.5"></path></svg>
+              </span>
+              Post-Event Cleanup & Reset
+            </h3>
+            <span class="text-[10px] bg-mocBlack/15 text-mocBlack px-2 py-0.5 rounded uppercase font-bold">4:00 PM - 5:00 PM</span>
+          </div>
+          <ul id="list-cleanup" class="space-y-3 text-xs">
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Clean down and pack up catering chafing dishes; preserve and store leftover food.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Remove and store the "World's Resume" whiteboards, marker sets, and table materials.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Break down and store all 8 round tables and chairs.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Reconfigure sanctuary main floor back to standard Sunday morning worship seating configuration.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+              <span>Vacuum the carpeted sanctuary, empty all trash receptacles, and reset pulpits/altar space.</span>
+            </li>
+          </ul>
+          <div class="mt-4 flex gap-2 no-print">
+            <input type="text" id="add-cleanup" placeholder="Add custom cleanup task..." class="text-xs p-2 border border-gray-200 rounded-lg w-full focus:outline-none focus:border-mocAzure">
+            <button onclick="addTask('cleanup')" class="bg-mocAzure text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-mocAzure/90">Add</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer with Slogan and Branding Details -->
+  <footer class="bg-mocBlack text-white border-t border-mocAzure/20 py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+      <div class="flex items-center gap-3">
+        <img src="https://mocfamily.com/wp-content/uploads/2025/11/moc-logo-512x512-1-150x150.webp" 
+             alt="MOC Logo" 
+             class="w-10 h-10 object-contain rounded-full border border-gray-600 bg-white"
+             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%231c1c1c\'><circle cx=\'50\' cy=\'50\' r=\'45\' stroke=\'%23bcbcbc\' stroke-width=\'2\'/><text x=\'50\' y=\'58\' font-family=\'Lora\' font-style=\'italic\' font-size=\'28\' fill=\'%23bcbcbc\' text-anchor=\'middle\' font-weight=\'bold\'>moc</text></svg>';">
+        <div>
+          <span class="font-bold block tracking-wider text-mocSilver uppercase">MINISTRIES OF CHRIST</span>
+          <span class="text-gray-500 block">Six Essential Needs Served</span>
+        </div>
+      </div>
+      <div class="text-center">
+        <p class="slogan-font text-mocYellow text-sm">"Where the love of God pierces the heart."</p>
+      </div>
+      <div class="text-right text-gray-500">
+        <p>Summit Date: June 20, 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Native JavaScript for Interactive Mechanics -->
+  <script>
+    // Tab Switching Logic (Now supporting 5 distinct structural panels)
+    function switchTab(tabId) {
+      // Hide all panels
+      const panels = document.querySelectorAll('.tab-panel');
+      panels.forEach(p => p.classList.add('hidden'));
+
+      // Deactivate all tab highlight buttons
+      const buttons = document.querySelectorAll('nav button');
+      buttons.forEach(btn => {
+        btn.classList.remove('tab-active');
+      });
+
+      // Show targeted panel
+      document.getElementById('panel-' + tabId).classList.remove('hidden');
+
+      // Highlight target nav button
+      document.getElementById('tab-' + tabId).classList.add('tab-active');
+    }
+
+    // Dynamic Task Addition for Checklists
+    function addTask(listType) {
+      const input = document.getElementById('add-' + listType);
+      const text = input.value.trim();
+      if (!text) return;
+
+      const ul = document.getElementById('list-' + listType);
+      const li = document.createElement('li');
+      li.className = "flex items-start gap-2.5";
+      li.innerHTML = `
+        <input type="checkbox" onchange="updateProgress()" class="mt-0.5 h-4 w-4 rounded border-gray-300 text-mocAzure focus:ring-mocAzure">
+        <span>${text}</span>
+      `;
+      ul.appendChild(li);
+      input.value = '';
+      updateProgress();
+    }
+
+    // Interactive Real-Time Progress Engine (Aggregates all checklists dynamically)
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      if (checkboxes.length === 0) return;
+
+      let checkedCount = 0;
+      checkboxes.forEach(box => {
+        if (box.checked) {
+          checkedCount++;
+          // Apply a gentle struck-through aesthetic to completed operations
+          box.nextElementSibling.classList.add('line-through', 'text-gray-400');
+        } else {
+          box.nextElementSibling.classList.remove('line-through', 'text-gray-400');
+        }
+      });
+
+      const percentage = Math.round((checkedCount / checkboxes.length) * 100);
+      document.getElementById('progress-bar').style.width = percentage + '%';
+      document.getElementById('progress-percent').innerText = percentage + '%';
+    }
+
+    // Initialize progress values upon load
+    window.onload = function() {
+      updateProgress();
+    };
+  </script>
+
+</body>
+</html>
