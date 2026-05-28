@@ -75,9 +75,22 @@
         padding: 0 !important;
         margin: 0 !important;
       }
-      .proposal-print-area {
-        display: block !important;
-        width: 100% !important;
+      
+      /* Hide elements not targeted by specific print jobs */
+      body.print-active-host header, 
+      body.print-active-host nav, 
+      body.print-active-host footer,
+      body.print-active-host .tab-panel:not(#panel-hosts),
+      body.print-active-host .no-print-host-guide {
+        display: none !important;
+      }
+      
+      body.print-active-worksheet header, 
+      body.print-active-worksheet nav, 
+      body.print-active-worksheet footer,
+      body.print-active-worksheet .tab-panel:not(#panel-hosts),
+      body.print-active-worksheet .no-print-worksheet {
+        display: none !important;
       }
     }
   </style>
@@ -283,7 +296,7 @@
             <div class="absolute left-4 md:left-1/2 transform -translate-x-1.5 w-3.5 h-3.5 rounded-full bg-mocAzure border-2 border-white z-10 shadow"></div>
             <div class="pl-8 md:pl-0 md:w-[45%]">
               <span class="text-xs font-bold text-mocAzure uppercase tracking-widest bg-mocAzure/10 px-2.5 py-1 rounded">1:15 PM - 1:55 PM</span>
-              <h3 class="text-lg font-bold text-mocBlack mt-2">Session 1: The Resume of a Father</h3>
+              <h3 class="text-lg font-bold text-mocBlack mt-2">Session 1: Heart over Status</h3>
               <p class="text-sm text-gray-500 mt-1">Interactive workshop evaluating the dynamic between worldly expectations and what a child's heart actually needs.</p>
             </div>
             <div class="pl-8 md:pl-0 md:w-[45%] bg-gray-50 p-4 rounded-lg border border-gray-100 w-full text-xs space-y-2">
@@ -354,11 +367,24 @@
 
     </div>
 
-    <!-- Active Tab Panel 3: TABLE HOSTS HUB -->
+    <!-- Active Tab Panel 3: TABLE HOSTS HUB & PRINTABLES -->
     <div id="panel-hosts" class="tab-panel hidden space-y-6">
       
-      <!-- Rosters and Assignments -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Top Action Control Panel for Print Options -->
+      <div class="flex flex-wrap gap-3 justify-end no-print bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+        <span class="text-xs font-semibold text-gray-500 self-center mr-auto">Draft Print Hub:</span>
+        <button onclick="printTarget('print-active-host')" class="bg-mocAzure hover:bg-mocAzure/90 text-white font-semibold text-xs px-4 py-2 rounded border border-mocYellow/30 flex items-center gap-2 shadow transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+          Print Host Guide (DRAFT)
+        </button>
+        <button onclick="printTarget('print-active-worksheet')" class="bg-mocIndigo hover:bg-mocIndigo/90 text-white font-semibold text-xs px-4 py-2 rounded border border-mocYellow/30 flex items-center gap-2 shadow transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+          Print Self-Assessment (DRAFT)
+        </button>
+      </div>
+
+      <!-- Overview Section -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 no-print-host-guide no-print-worksheet">
         
         <!-- Table Leaders Assignment Card -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 md:col-span-2 print-card">
@@ -456,28 +482,253 @@
 
       </div>
 
-      <!-- Printable Table Host Card Handout -->
-      <div class="bg-mocAzure text-white p-6 rounded-xl shadow-md border-l-8 border-mocYellow print-card">
-        <div class="flex items-center justify-between border-b border-white/15 pb-4 mb-4">
-          <span class="text-xs tracking-widest font-bold uppercase text-mocYellow">Ministries of Christ • Table Host Cheat Sheet</span>
-          <span class="text-[10px] bg-white/10 px-2 py-1 rounded font-heading">Printable</span>
+      <!-- SECTION A: STANDALONE PRINTABLE TABLE HOST GUIDE (DRAFT) -->
+      <div id="printable-host-guide-section" class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-300 no-print-worksheet print-card">
+        
+        <!-- Header / Watermark -->
+        <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
+          <div class="flex items-center gap-3">
+            <img src="https://mocfamily.com/wp-content/uploads/2025/11/moc-logo-512x512-1-150x150.webp" alt="MOC Logo" class="w-12 h-12 object-contain">
+            <div>
+              <h3 class="text-sm font-bold font-heading text-mocAzure">MINISTRIES OF CHRIST</h3>
+              <p class="text-[10px] text-gray-500 uppercase tracking-widest">Men's Summit Facilitation Guide</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="bg-mocYellow/20 text-mocBlack text-xs font-bold px-3 py-1 rounded border border-mocYellow uppercase tracking-wider">DRAFT FOR REVIEW</span>
+          </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed">
-          <div>
-            <h4 class="font-bold text-sm text-mocYellow mb-2 uppercase tracking-wide">Key Prompts for Sessions 1 & 2</h4>
-            <ul class="space-y-2 list-disc pl-4 text-white/95">
-              <li>In what areas of your life do you feel the most pressure to live up to worldly expectations (earnings, status, or unspoken comparison)?</li>
-              <li>If your children wrote your resume today, what do you think they would list as your most valuable "qualification"?</li>
-              <li>Can you think of a time when you over-indexed on being a "Shield" (demanding respect/enforcing rules) and it hurt your family's heart?</li>
-            </ul>
+
+        <div class="text-center mb-8">
+          <h1 class="text-2xl font-bold text-mocBlack font-heading">SUMMIT TABLE FACILITATOR PLAYBOOK</h1>
+          <p class="text-xs text-gray-500 italic mt-1">Theme: Stronger Fathers, Stronger Families (June 20, 2026)</p>
+          <div class="w-16 h-0.5 bg-mocAzure mx-auto mt-2"></div>
+        </div>
+
+        <div class="space-y-6 text-xs md:text-sm text-mocBlack/90 leading-relaxed font-sans">
+          
+          <!-- Phase 1 -->
+          <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h4 class="font-bold text-mocAzure uppercase tracking-wide text-xs mb-2">Phase 1: Welcome & The Icebreaker (1:00 PM - 1:15 PM)</h4>
+            <p class="mb-2"><strong>Objective:</strong> Lower performance anxiety, break social barriers, and establish instant table safety through humor.</p>
+            <p class="font-semibold text-mocIndigo">Your Facilitator Action:</p>
+            <p class="mt-1">
+              Welcome each man warmly as they sit down. Give them a copy of the "Spec Sheet" worksheet. Guide the table through the **"First Car" Draft**: 
+              <em>"Briefly share: What was your very first car, how much did it cost, and what was its worst defect?"</em> 
+              Be the first to share your story—model lightheartedness.
+            </p>
           </div>
-          <div>
-            <h4 class="font-bold text-sm text-mocYellow mb-2 uppercase tracking-wide">Lunch & Guided Session Questions</h4>
-            <ul class="space-y-2 list-disc pl-4 text-white/95">
-              <li>Who was the first man in your life who showed you what a true "Shepherd" (heart-caretaker) looked like? What did he do?</li>
-              <li>What is one practical family habit or spiritual tradition you want to start inside your household this month to build stronger families?</li>
-            </ul>
+
+          <!-- Phase 2 -->
+          <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h4 class="font-bold text-mocAzure uppercase tracking-wide text-xs mb-2">Phase 2: Heart over Status — True Identity (1:15 PM - 1:55 PM)</h4>
+            <p class="mb-2"><strong>Objective:</strong> Transition men from defining themselves by external performance/earnings to defining themselves by character.</p>
+            <p class="font-semibold text-mocIndigo">Your Facilitator Action:</p>
+            <p class="mt-1">
+              Have men write on an index card: <strong>"What does the culture say is the primary qualification of a successful man?"</strong> Collect and post cards on the front wall.
+              Then turn the card over and write: <strong>"What does your child actually need from you when they are scared or failing?"</strong> Contrast these two answers at your table.
+            </p>
+            <div class="mt-2 pl-4 border-l-2 border-mocYellow italic text-gray-600">
+              Table Prompt: "In what areas of your life do you feel the most pressure to live up to worldly expectations rather than spiritual ones?"
+            </div>
           </div>
+
+          <!-- Phase 3 -->
+          <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h4 class="font-bold text-mocAzure uppercase tracking-wide text-xs mb-2">Phase 3: The Shield & The Shepherd assessment (1:55 PM - 2:45 PM)</h4>
+            <p class="mb-2"><strong>Objective:</strong> Guide men through the balanced dynamic of boundary/rule setting (Shield) and heart/emotional safety (Shepherd).</p>
+            <p class="font-semibold text-mocIndigo">Your Facilitator Action:</p>
+            <p class="mt-1">
+              Distribute the <strong>Draft Self-Assessment Worksheet</strong>. Give men 5 minutes of quiet time to rate themselves. Ensure them that this is completely confidential.
+            </p>
+            <div class="mt-2 pl-4 border-l-2 border-mocYellow italic text-gray-600">
+              Table Prompt: "Are you naturally more of a 'Shield' (rules/structure) or a 'Shepherd' (grace/empathy) in your home? How can we balance these roles?"
+            </div>
+          </div>
+
+          <!-- Phase 4 -->
+          <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h4 class="font-bold text-mocAzure uppercase tracking-wide text-xs mb-2">Phase 4: Buffet Lunch & Table Talk (2:45 PM - 3:25 PM)</h4>
+            <p class="mb-2"><strong>Objective:</strong> Foster deep brotherhood and organic fellowship over Swanie's catered lunch.</p>
+            <p class="font-semibold text-mocIndigo">Your Facilitator Action:</p>
+            <p class="mt-1">
+              Encourage the men to grab lunch. Once seated back at the table, use the card tents to ask: 
+              <em>"Who was the first man in your life who showed you what a true Shepherd looked like? What did he do?"</em>
+            </p>
+          </div>
+
+          <!-- Phase 5 -->
+          <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <h4 class="font-bold text-mocAzure uppercase tracking-wide text-xs mb-2">Phase 5: Scriptural Deep Dive & Commissioning (3:25 PM - 4:00 PM)</h4>
+            <p class="mb-2"><strong>Objective:</strong> Ground the concepts in scripture (Job 1:5, Rev 1:6) and transition to the altar call led by Bishop Alexander.</p>
+            <p class="font-semibold text-mocIndigo">Your Facilitator Action:</p>
+            <p class="mt-1">
+              Support the closing altar call. If any man at your table steps forward or needs prayer, join them. Table hosts, along with Rodrick and Angelo, will serve as the immediate prayer warriors at the altar.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION B: STANDALONE PRINTABLE SELF-ASSESSMENT WORKSHEET (DRAFT) -->
+      <div id="printable-worksheet-section" class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-300 no-print-host-guide print-card">
+        
+        <!-- Header / Watermark -->
+        <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
+          <div class="flex items-center gap-3">
+            <img src="https://mocfamily.com/wp-content/uploads/2025/11/moc-logo-512x512-1-150x150.webp" alt="MOC Logo" class="w-12 h-12 object-contain">
+            <div>
+              <h3 class="text-sm font-bold font-heading text-mocAzure">MINISTRIES OF CHRIST</h3>
+              <p class="text-[10px] text-gray-500 uppercase tracking-widest text-slate-400">Personal Growth Worksheet</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="bg-mocIndigo/10 text-mocIndigo text-xs font-bold px-3 py-1 rounded border border-mocIndigo/30 uppercase tracking-wider">DRAFT FOR SUMMIT REVIEW</span>
+          </div>
+        </div>
+
+        <div class="text-center mb-8">
+          <h1 class="text-2xl font-bold text-mocBlack font-heading">THE SHIELD & THE SHEPHERD</h1>
+          <p class="text-xs text-gray-500 italic mt-1">Balancing Boundaries and Heart-Care in Fatherhood</p>
+          <div class="w-16 h-0.5 bg-mocIndigo mx-auto mt-2"></div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-xs md:text-sm mb-6 leading-relaxed">
+          <strong class="text-mocAzure block mb-1">Instructions:</strong>
+          This personal inventory is completely private—it is just between you, your heart, and the Lord. Rate your level of agreement with the statements in both categories from 1 (Strongly Disagree) to 10 (Strongly Agree) to evaluate your current balance as a father.
+        </div>
+
+        <div class="space-y-8 font-sans">
+          
+          <!-- Category 1: The Shield -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-bold text-mocAzure uppercase tracking-widest border-b border-gray-100 pb-1">PART 1: THE SHIELD (Boundary & Security)</h3>
+            
+            <div class="space-y-2">
+              <label class="text-xs font-medium text-mocBlack block">1. I establish clear boundaries and consistent expectations in our home that make my family feel secure.</label>
+              <div class="flex justify-between text-[10px] text-gray-400 px-1"><span>Strongly Disagree</span><span>Neutral</span><span>Strongly Agree</span></div>
+              <div class="flex justify-between gap-1">
+                <!-- Simple 1-10 radio scale mockup -->
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">1</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">2</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">3</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">4</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">5</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">6</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">7</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">8</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">9</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs hover:bg-mocAzure/5 cursor-pointer">10</div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-medium text-mocBlack block">2. I work diligently not just to provide financially, but to protect the emotional peace of our household from outside distractions.</label>
+              <div class="flex justify-between text-[10px] text-gray-400 px-1"><span>Strongly Disagree</span><span>Neutral</span><span>Strongly Agree</span></div>
+              <div class="flex justify-between gap-1">
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">1</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">2</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">3</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">4</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">5</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">6</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">7</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">8</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">9</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">10</div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-medium text-mocBlack block">3. When conflicts arise inside the home, I handle them with steady, protective strength rather than losing my temper.</label>
+              <div class="flex justify-between text-[10px] text-gray-400 px-1"><span>Strongly Disagree</span><span>Neutral</span><span>Strongly Agree</span></div>
+              <div class="flex justify-between gap-1">
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">1</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">2</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">3</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">4</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">5</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">6</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">7</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">8</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">9</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">10</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 2: The Shepherd -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-bold text-mocIndigo uppercase tracking-widest border-b border-gray-100 pb-1">PART 2: THE SHEPHERD (Presence & Care)</h3>
+            
+            <div class="space-y-2">
+              <label class="text-xs font-medium text-mocBlack block">1. Our home is a safe environment where my children and spouse can share their fears and failures without feeling judged.</label>
+              <div class="flex justify-between text-[10px] text-gray-400 px-1"><span>Strongly Disagree</span><span>Neutral</span><span>Strongly Agree</span></div>
+              <div class="flex justify-between gap-1">
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">1</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">2</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">3</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">4</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">5</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">6</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">7</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">8</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">9</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">10</div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-medium text-mocBlack block">2. I regularly spend focused, uninterrupted time listening to the hearts of my family, separate from chores or screens.</label>
+              <div class="flex justify-between text-[10px] text-gray-400 px-1"><span>Strongly Disagree</span><span>Neutral</span><span>Strongly Agree</span></div>
+              <div class="flex justify-between gap-1">
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">1</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">2</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">3</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">4</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">5</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">6</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">7</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">8</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">9</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">10</div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-medium text-mocBlack block">3. I am quick to ask for forgiveness when I fall short and actively model grace to my household.</label>
+              <div class="flex justify-between text-[10px] text-gray-400 px-1"><span>Strongly Disagree</span><span>Neutral</span><span>Strongly Agree</span></div>
+              <div class="flex justify-between gap-1">
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">1</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">2</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">3</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">4</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">5</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">6</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">7</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">8</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">9</div>
+                <div class="flex-1 text-center py-1 border border-gray-200 rounded text-xs">10</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reflective Prompts Box -->
+          <div class="pt-4 space-y-4">
+            <h3 class="text-sm font-bold text-mocBlack uppercase tracking-widest border-b border-gray-100 pb-1">PART 3: INTROSPECTIVE REFLECTION</h3>
+            
+            <div class="space-y-1">
+              <label class="text-xs text-gray-500 block">Where is my family calling for more "Shepherd" heart-care from me right now?</label>
+              <div class="w-full h-16 border border-gray-200 rounded-lg p-2"></div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-xs text-gray-500 block">How can I strengthen my "Shield" (boundaries & spiritual protection) without becoming emotionally distant or rigid?</label>
+              <div class="w-full h-16 border border-gray-200 rounded-lg p-2"></div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -895,8 +1146,9 @@
       panels.forEach(p => p.classList.add('hidden'));
 
       // Deactivate all tab highlight buttons
-      const buttons = document.querySelectorAll('nav button');
-      buttons.forEach(btn => {
+      const buttons = document.querySelectorAll('nav border-b-4');
+      const allButtons = document.querySelectorAll('nav button');
+      allButtons.forEach(btn => {
         btn.classList.remove('tab-active');
       });
 
@@ -905,6 +1157,16 @@
 
       // Highlight target nav button
       document.getElementById('tab-' + tabId).classList.add('tab-active');
+    }
+
+    // Specific Print Targeting (Hides non-targeted cards cleanly)
+    function printTarget(targetClass) {
+      document.body.classList.add(targetClass);
+      window.print();
+      // Delay removal slightly to ensure the browser spool completes
+      setTimeout(() => {
+        document.body.classList.remove(targetClass);
+      }, 500);
     }
 
     // Dynamic Task Addition for Checklists
